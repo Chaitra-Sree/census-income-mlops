@@ -131,7 +131,7 @@ def get_pipeline(
     pipeline_name="AbalonePipeline",
     base_job_prefix="Abalone",
 processing_instance_type="ml.t3.medium",
-training_instance_type="ml.m5.large"
+training_instance_type="ml.m5.large",
 ):
     """Gets a SageMaker ML Pipeline instance working with on abalone data.
 
