@@ -155,9 +155,9 @@ def get_pipeline(
         name="ModelApprovalStatus", default_value="PendingManualApproval"
     )
     input_data = ParameterString(
-        name="InputDataUrl",
-        default_value=f"s3://preprocessoroutputs/income.txt",
-    )
+    name="InputDataUrl",
+    default_value=f"s3://{default_bucket}/income.txt",
+)
 
     # processing step for feature engineering
     sklearn_processor = SKLearnProcessor(
