@@ -159,6 +159,49 @@ training_instance_type="ml.m5.large",
     default_value=f"s3://{default_bucket}/income.txt",
 )
 
+def get_pipeline(
+    region,
+    sagemaker_project_name=None,
+    role=None,
+    default_bucket=None,
+    model_package_group_name="AbalonePackageGroup",
+    pipeline_name="AbalonePipeline",
+    base_job_prefix="Abalone",
+    processing_instance_type="ml.t3.medium",
+    training_instance_type="ml.m5.large",
+):
+    """Gets a SageMaker ML Pipeline instance."""
+
+    sagemaker_session = get_session(region, default_bucket)
+    if role is None:
+        role = sagemaker.session.get_execution_role(sagemaker_session)
+
+    pipeline_session = get_pipeline_session(region, default_bucket)
+
+    processing_instance_count = ParameterInteger(
+        name="ProcessingInstanceCount",
+        default_value=1,
+    )
+
+    processing_instance_type = ParameterString(
+        name="ProcessingInstanceType",
+        default_value=processing_instance_type,
+    )
+
+    training_instance_type = ParameterString(
+        name="TrainingInstanceType",
+        default_value=training_instance_type,
+    )
+
+    model_approval_status = ParameterString(
+        name="ModelApprovalStatus",
+        default_value="PendingManualApproval",
+    )
+
+    input_data = ParameterString(
+        name="InputDataUrl",
+        default_value=f"s3://{default_bucket}/income.txt",
+    )
     # processing step for feature engineering
     sklearn_processor = SKLearnProcessor(
         framework_version="0.23-1",
