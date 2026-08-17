@@ -173,16 +173,6 @@ def get_pipeline(
         default_value=1,
     )
 
-    processing_instance_type = ParameterString(
-        name="ProcessingInstanceType",
-        default_value=processing_instance_type,
-    )
-
-    training_instance_type = ParameterString(
-        name="TrainingInstanceType",
-        default_value=training_instance_type,
-    )
-
     model_approval_status = ParameterString(
         name="ModelApprovalStatus",
         default_value="PendingManualApproval",
@@ -351,13 +341,11 @@ def get_pipeline(
     # pipeline instance
     pipeline = Pipeline(
         name=pipeline_name,
-        parameters=[
-            processing_instance_type,
-            processing_instance_count,
-            training_instance_type,
-            model_approval_status,
-            input_data,
-        ],
+       parameters=[
+    processing_instance_count,
+    model_approval_status,
+    input_data,
+    ],
         steps=[step_process, step_train, step_eval, step_cond],
         sagemaker_session=pipeline_session,
     )
